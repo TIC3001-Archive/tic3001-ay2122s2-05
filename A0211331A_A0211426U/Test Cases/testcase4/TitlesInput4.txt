@@ -1,0 +1,31 @@
+SESSIONDAYOFWEEK
+FILMTITLELONGALT
+tblTrans_Ticket
+ADMITDETAILSALT2T
+Applications
+TICKETTYPELONGALT
+We really enjoyed our stay
+The room is too noisy
+Please sign your name here
+More fresh towels are available at the front desk
+Good to see you
+Hello
+Bonjour
+It is nice to meet you
+Good afternoon
+Greeting
+Stay safe
+Welcome
+Sleep with angels
+Sleep tight, don’t let the bed bugs bite
+Let’s start counting the sheeps
+MESSAGESTUB2ALT3
+StartDayOfWeek
+Description
+MESSAGESTUB2ALT2
+FILMTITLESHORTAL
+Have a good sleep
+Dream of me
+Until tomorrow
+Rest time for blossoms
+
