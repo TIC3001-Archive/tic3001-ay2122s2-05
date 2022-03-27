@@ -7,16 +7,22 @@ import java.lang.*;
 public class Main {
     private ArrayList<String> kwicList = new ArrayList<String>();
     private ArrayList<String> lineTxt = new ArrayList<String>();
+    private ArrayList<String> ignoreTxt = new ArrayList<String>();
+    private ArrayList<String> requiredTxt = new ArrayList<String>();
     private BufferedReader inputFile;
     private BufferedWriter outputFile;
 
     public static void main(String[] args) {
         Main kwic = new Main();
-        kwic.input("C:\\test\\testcase4\\TitlesInput4.txt");
+        kwic.input("E:\\test\\Test2\\Titles2.txt");
+        kwic.inputIgnore("E:\\test\\Test2\\Ignored2.txt");
+        kwic.inputRequired("E:\\test\\Test2\\Required2.txt");
         kwic.shift();
+        kwic.ignore();
+        kwic.required();
         kwic.alphabetizer();
         kwic.alphabetizerFinal();
-        kwic.output("C:\\test\\testcase4\\out.txt");
+        kwic.output("E:\\test\\Test2\\out.txt");
     }
 
     private void output(String filename) {
@@ -121,6 +127,80 @@ public class Main {
             }
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void inputIgnore(String fileName) {
+        try {
+            inputFile = new BufferedReader(new FileReader(fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line;
+        try {
+            while ((line = inputFile.readLine()) != null) {
+                ignoreTxt.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void inputRequired(String fileName) {
+        try {
+            inputFile = new BufferedReader(new FileReader(fileName));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String line;
+        try {
+            while ((line = inputFile.readLine()) != null) {
+                requiredTxt.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void ignore() {
+        for (int i = 0; i < kwicList.size(); i++) {
+            String tmp = kwicList.get(i).toString();
+            String arr[] = tmp.split(" ", 2);
+            String firstWord = arr[0];
+            for (int j = 0; j < ignoreTxt.size(); j++) {
+                if (Objects.equals(firstWord.toLowerCase(), ignoreTxt.get(j).toLowerCase())) {
+                    kwicList.remove(i);
+                    i--;
+                }
+            }
+        }
+    }
+
+    private void required() {
+        int count = 0;
+        for (int i = 0; i < kwicList.size(); i++) {
+            String tmp = kwicList.get(i).toString();
+            String arr[] = tmp.split(" ", 2);
+            String firstWord = arr[0];
+            for (int j = 0; j < requiredTxt.size(); j++) {
+                String tmp2 = requiredTxt.get(j).toLowerCase();
+                if(firstWord.toLowerCase().equals(tmp2)) {
+                    break;
+                }else{
+                    count = count + 1;
+                }
+
+                if (count > 2){
+                    kwicList.remove(i);
+                    if (i != 0) {
+                        i = i - 1;
+                    }else {
+                        i = -1;
+                    }
+                    count = 0;
+                }
+
+            }
         }
     }
 
