@@ -1,0 +1,3 @@
+Computer programming servers the purpose of finding a sequence of instructions that are able to automate the performance of specific tasks or solve defined problems. 
+Programming process therefore requires expertise in a variety of other subjects such as the knowledge of application domains, formal logic and specified algorithms. Computer programming is usually regarded as one phase in a software development process within software engineering.
+
