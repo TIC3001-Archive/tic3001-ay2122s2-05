@@ -11,7 +11,7 @@ public class Main {
     static ArrayList<String> courseAdd = new ArrayList<String>();
     private BufferedReader inputFile;
     public static String line ="____________________________________________________________\n";
-    String[] fileNames = new String[]{"C:\\test\\testing4\\CourseTitles.txt", "C:\\test\\testing4\\MovieTitles.txt"};
+    String[] fileNames = new String[]{"C:\\test\\testing1\\CourseTitles.txt", "C:\\test\\testing1\\MovieTitles.txt"};
     static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
