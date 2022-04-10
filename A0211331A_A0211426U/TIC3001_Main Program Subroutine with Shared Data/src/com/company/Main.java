@@ -7,53 +7,60 @@ import java.lang.*;
 public class Main {
     private ArrayList<String> kwicList = new ArrayList<String>();
     private ArrayList<String> lineTxt = new ArrayList<String>();
-    private ArrayList<String> ignoreTxt = new ArrayList<String>();
-    private ArrayList<String> requiredTxt = new ArrayList<String>();
+    static ArrayList<String> moviesAdd = new ArrayList<String>();
+    static ArrayList<String> courseAdd = new ArrayList<String>();
     private BufferedReader inputFile;
-    private BufferedWriter outputFile;
+    public static String line ="____________________________________________________________\n";
+    String[] fileNames = new String[]{"C:\\test\\testing4\\CourseTitles.txt", "C:\\test\\testing4\\MovieTitles.txt"};
+    static Scanner in = new Scanner(System.in);
 
     public static void main(String[] args) {
         Main kwic = new Main();
-        kwic.input("E:\\test\\Test3\\Titles3.txt");
-        kwic.inputIgnore("E:\\test\\Test3\\Ignored3.txt");
-        kwic.inputRequired("E:\\test\\Test3\\Required3.txt");
+        kwic.greet();
+        kwic.input();
         kwic.shift();
-        kwic.ignore();
-        kwic.required();
-        kwic.alphabetizer();
-        kwic.alphabetizerFinal();
-        kwic.output("E:\\test\\Test3\\out123.txt");
+        kwic.output();
     }
 
-    private void output(String filename) {
-        Iterator<String> it = kwicList.iterator();
-        try {
-            outputFile = new BufferedWriter(new FileWriter(filename));
-            while (it.hasNext()) {
-                outputFile.write(it.next()+"\n");
-            }
-        } catch (IOException e){
-            e.printStackTrace();
-        } finally {
+    /** Prints greeting message. */
+    public static void greet() {
+        String start = "Welcome to KWIC!\n";
+        String end = "Please input the word to be search:\n";
+        System.out.println(line + start + end);
+    }
+
+    /** Prints exit message. */
+    public static void Echo(){
+        System.out.println(line + "execution ends\n" + line);
+    }
+
+    private void input() {
+        for(String fileName: fileNames ) {
             try {
-                if (outputFile != null) {
-                    outputFile.close();
+                inputFile = new BufferedReader(new FileReader(fileName));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            String line;
+            try {
+                lineTxt.add(fileName.substring(17));
+                while ((line = inputFile.readLine()) != null) {
+                    lineTxt.add(line);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
+
         }
     }
 
-    /**
-     * sort the words based on the comparison value of two characters.
-     */
     private void alphabetizer() {
-        Collections.sort(this.kwicList, new AlphabetizerComparator());
+        Collections.sort(this.courseAdd, new AlphabetizerComparator());
     }
 
     private void alphabetizerFinal() {
-        Collections.sort(kwicList, new SortCaseInSensitive());
+        Collections.sort(courseAdd, new SortCaseInSensitive());
+
     }
 
     /**
@@ -82,6 +89,7 @@ public class Main {
             char o2c = o2.toLowerCase().charAt(0);
             compareValue = o1c - o2c;
             return compareValue;
+
         }
     }
 
@@ -114,94 +122,63 @@ public class Main {
         }
     }
 
-    private void input(String fileName) {
-        try {
-            inputFile = new BufferedReader(new FileReader(fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String line;
-        try {
-            while ((line = inputFile.readLine()) != null) {
-                lineTxt.add(line);
+    public static void printFirstOutput() {
+        if (!courseAdd.isEmpty()){
+            System.out.println("CourseTitles.txt");
+            for (int i = 0; i < courseAdd.size(); i++) {
+                System.out.println( courseAdd.get(i) + "\n");
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
-    }
 
-    private void inputIgnore(String fileName) {
-        try {
-            inputFile = new BufferedReader(new FileReader(fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String line;
-        try {
-            while ((line = inputFile.readLine()) != null) {
-                ignoreTxt.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
-
-    private void inputRequired(String fileName) {
-        try {
-            inputFile = new BufferedReader(new FileReader(fileName));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        String line;
-        try {
-            while ((line = inputFile.readLine()) != null) {
-                requiredTxt.add(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void ignore() {
-        for (int i = 0; i < kwicList.size(); i++) {
-            String tmp = kwicList.get(i).toString();
-            String arr[] = tmp.split(" ", 2);
-            String firstWord = arr[0];
-            for (int j = 0; j < ignoreTxt.size(); j++) {
-                if (Objects.equals(firstWord.toLowerCase(), ignoreTxt.get(j).toLowerCase())) {
-                    kwicList.remove(i);
-                    i--;
-                }
+    public static void printSecondOutput() {
+        if (!moviesAdd.isEmpty()) {
+            System.out.println("MovieTitles.txt");
+            for (int i = 0; i < moviesAdd.size(); i++) {
+                System.out.println(moviesAdd.get(i) + "\n");
             }
         }
     }
 
-    private void required() {
+    private void output() {
         int count = 0;
-        for (int i = 0; i < kwicList.size(); i++) {
-            String tmp = kwicList.get(i).toString();
-            String arr[] = tmp.split(" ", 2);
-            String firstWord = arr[0];
-            for (int j = 0; j < requiredTxt.size(); j++) {
-                String tmp2 = requiredTxt.get(j).toLowerCase();
-                if(firstWord.toLowerCase().equals(tmp2)) {
-                    break;
-                }else{
-                    count = count + 1;
-                }
-
-                if (count > 2){
-                    kwicList.remove(i);
-                    if (i != 0) {
-                        i = i - 1;
-                    }else {
-                        i = -1;
+        Boolean stop = false;
+        while (!stop) {
+            String input = in.nextLine();
+            if (input.equals("q")) {
+                Echo();
+                stop = true;
+            } else {
+                for (int i = 0; i < kwicList.size(); i++) {
+                    String first = "CourseTitles.txt" ;
+                    String second = "MovieTitles.txt";
+                    String tmp = kwicList.get(i).toString();
+                    //System.out.println(tmp + "\n");
+                    String arr[] = tmp.split(" ", 2);
+                    String firstWord = arr[0];
+                    if (firstWord.toLowerCase().equals(first.toLowerCase())) {
+                        count = 0;
+                    }else if (firstWord.toLowerCase().equals(input.toLowerCase()) && (count == 0)){
+                        courseAdd.add(tmp);
+                        alphabetizer();
+                        alphabetizerFinal();
+                    }else if (firstWord.toLowerCase().equals(second.toLowerCase())) {
+                        count = 1;
+                    }else if (firstWord.toLowerCase().equals(input.toLowerCase()) && (count == 1)){
+                        moviesAdd.add(tmp);
+                        alphabetizer();
+                        alphabetizerFinal();
+                    } else {
+                        continue;
                     }
-                    count = 0;
                 }
-
+                printFirstOutput();
+                printSecondOutput();
+                System.out.println(line);
             }
         }
-    }
 
+    }
 }
+
+
